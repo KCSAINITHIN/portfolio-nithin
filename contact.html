@@ -7,36 +7,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Firebase SDK -->
-    <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-        import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics.js";
-
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyAol3gAFU0oFKBD_B2LZzet80YRhyu-JBg",
-            authDomain: "portfolio-nithin-f9a8e.firebaseapp.com",
-            databaseURL: "https://portfolio-nithin-f9a8e-default-rtdb.firebaseio.com",
-            projectId: "portfolio-nithin-f9a8e",
-            storageBucket: "portfolio-nithin-f9a8e.firebasestorage.app",
-            messagingSenderId: "1006574254937",
-            appId: "1:1006574254937:web:cde674412329f7d25caa48",
-            measurementId: "G-E0CTM79W13"
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
-        const analytics = getAnalytics(app);
-
-        // Make Firebase available globally
-        window.firebaseApp = app;
-        window.firebaseDatabase = database;
-    </script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics-compat.js"></script>
 
     <style>
-        :root {
+
+         :root {
             --primary-color: #ff6b00;
             --primary-light: #ff7a1a;
             --primary-glow: rgba(255, 107, 0, 0.3);
@@ -692,6 +669,35 @@
             background: var(--primary-color);
             color: #fff;
         }
+        
+        :root {
+            --primary-color: #ff6b00;
+            --primary-light: #ff7a1a;
+            --primary-glow: rgba(255, 107, 0, 0.3);
+            --bg-dark: #0a0a0a;
+            --card-bg: rgba(20, 20, 20, 0.85);
+            --text-primary: #fff;
+            --text-secondary: #b8b8b8;
+            --text-muted: #8a8a8a;
+            --text-dim: #6b6b6b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            position: relative;
+            transition: background 0.3s ease;
+        }
+
+        /* ... (all your existing CSS remains exactly the same) ... */
     </style>
 </head>
 <body>
@@ -827,6 +833,23 @@
     </div>
 
     <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAol3gAFU0oFKBD_B2LZzet80YRhyu-JBg",
+            authDomain: "portfolio-nithin-f9a8e.firebaseapp.com",
+            databaseURL: "https://portfolio-nithin-f9a8e-default-rtdb.firebaseio.com",
+            projectId: "portfolio-nithin-f9a8e",
+            storageBucket: "portfolio-nithin-f9a8e.firebasestorage.app",
+            messagingSenderId: "1006574254937",
+            appId: "1:1006574254937:web:cde674412329f7d25caa48",
+            measurementId: "G-E0CTM79W13"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const analytics = firebase.analytics();
+
         // Theme Switching
         const themes = {
             orange: { primary: '#ff6b00', light: '#ff7a1a', glow: 'rgba(255, 107, 0, 0.3)' },
@@ -876,6 +899,10 @@
             const savedTheme = localStorage.getItem('selectedTheme') || 'orange';
             changeTheme(savedTheme);
             createParticles();
+            
+            // Log Firebase initialization
+            console.log('🔥 Firebase initialized successfully!');
+            console.log('📊 Database URL:', firebaseConfig.databaseURL);
         });
 
         // Create floating particles
@@ -917,53 +944,51 @@
             try {
                 // Get form data
                 const formData = {
-                    name: document.getElementById('name').value,
-                    email: document.getElementById('email').value,
-                    subject: document.getElementById('subject').value,
-                    message: document.getElementById('message').value,
+                    name: document.getElementById('name').value.trim(),
+                    email: document.getElementById('email').value.trim(),
+                    subject: document.getElementById('subject').value.trim(),
+                    message: document.getElementById('message').value.trim(),
                     timestamp: new Date().toISOString(),
-                    ip: await getClientIP()
+                    ip: await getClientIP(),
+                    status: 'new'
                 };
+
+                // Validate form data
+                if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+                    throw new Error('Please fill in all fields');
+                }
+
+                console.log('📨 Saving to Firebase:', formData);
                 
-                // Wait for Firebase to be available
-                await waitForFirebase();
+                // Generate a unique ID for the message
+                const messageId = 'msg_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
                 
-                // Save to Firebase Realtime Database
-                const database = window.firebaseDatabase;
-                const messagesRef = window.firebaseRef(database, 'contactMessages');
-                const newMessageRef = window.firebasePush(messagesRef);
+                // Save to Firebase Realtime Database at root level
+                const messageRef = database.ref('messages/' + messageId);
                 
-                await window.firebaseSet(newMessageRef, formData);
+                await messageRef.set(formData);
+                
+                console.log('✅ Message saved successfully!');
+                console.log('📊 View your messages at: https://console.firebase.google.com/u/0/project/portfolio-nithin-f9a8e/database/portfolio-nithin-f9a8e-default-rtdb/data/~2F');
                 
                 // Show success message
-                showNotification('🚀 Message Sent!', 'Your message has been saved and I\'ll get back to you soon!', 'success');
+                showNotification('🚀 Message Sent!', 'Your message has been saved to my database! I\'ll get back to you soon.', 'success');
                 
                 // Reset form
                 this.reset();
                 
             } catch (error) {
-                console.error('Error saving message:', error);
-                showNotification('❌ Error', 'Failed to send message. Please try again or contact me directly.', 'error');
+                console.error('❌ Error saving message:', error);
+                const errorMessage = error.message.includes('fill in all fields') 
+                    ? 'Please fill in all required fields.' 
+                    : 'Failed to send message. Please try again or contact me directly.';
+                showNotification('❌ Error', errorMessage, 'error');
             } finally {
                 // Restore button state
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
             }
         });
-
-        // Wait for Firebase to be available
-        function waitForFirebase() {
-            return new Promise((resolve) => {
-                const checkFirebase = () => {
-                    if (window.firebaseDatabase && window.firebaseRef && window.firebasePush && window.firebaseSet) {
-                        resolve();
-                    } else {
-                        setTimeout(checkFirebase, 100);
-                    }
-                };
-                checkFirebase();
-            });
-        }
 
         // Get client IP (approximate)
         async function getClientIP() {
@@ -1017,8 +1042,14 @@
             document.body.appendChild(notification);
             
             setTimeout(() => {
-                notification.style.animation = 'fadeOut 0.5s ease-out';
-                setTimeout(() => notification.remove(), 500);
+                if (notification.parentElement) {
+                    notification.style.animation = 'fadeOut 0.5s ease-out';
+                    setTimeout(() => {
+                        if (notification.parentElement) {
+                            notification.remove();
+                        }
+                    }, 500);
+                }
             }, 4000);
         }
 
