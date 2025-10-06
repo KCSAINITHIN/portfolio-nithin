@@ -5,15 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact - K C SAI NITHIN</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics-compat.js"></script>
-
     <style>
-
-         :root {
+        :root {
             --primary-color: #ff6b00;
             --primary-light: #ff7a1a;
             --primary-glow: rgba(255, 107, 0, 0.3);
@@ -321,39 +314,33 @@
             font-weight: 600;
         }
 
-        /* Contact Content */
-        .contact-content {
+        /* Contact Grid */
+        .contact-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: start;
-        }
-
-        /* Contact Info - Left Side */
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
         }
 
         .contact-card {
             background: rgba(0, 0, 0, 0.4);
             border-radius: 25px;
-            padding: 35px;
+            padding: 50px 40px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             overflow: hidden;
             backdrop-filter: blur(10px);
+            text-align: center;
             opacity: 0;
-            transform: translateX(-50px);
-            animation: slideInLeft 0.8s ease-out forwards;
+            transform: translateY(50px);
+            animation: fadeInUp 0.8s ease-out forwards;
         }
 
-        .contact-card:nth-child(1) { animation-delay: 0.2s; }
-        .contact-card:nth-child(2) { animation-delay: 0.4s; }
-        .contact-card:nth-child(3) { animation-delay: 0.6s; }
-        .contact-card:nth-child(4) { animation-delay: 0.8s; }
+        .contact-card:nth-child(1) { animation-delay: 0.1s; }
+        .contact-card:nth-child(2) { animation-delay: 0.2s; }
+        .contact-card:nth-child(3) { animation-delay: 0.3s; }
+        .contact-card:nth-child(4) { animation-delay: 0.4s; }
 
         .contact-card::before {
             content: '';
@@ -371,16 +358,15 @@
         }
 
         .contact-card:hover {
-            transform: translateY(-10px) scale(1.02);
+            transform: translateY(-15px) scale(1.02);
             border-color: var(--primary-color);
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
         }
 
         .contact-icon {
-            font-size: 3rem;
+            font-size: 4rem;
             color: var(--primary-color);
-            margin-bottom: 20px;
-            text-align: center;
+            margin-bottom: 25px;
             transition: transform 0.3s ease;
         }
 
@@ -389,101 +375,36 @@
         }
 
         .contact-card h3 {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             color: var(--text-primary);
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             font-weight: 600;
-            text-align: center;
         }
 
-        .contact-details {
-            text-align: center;
-        }
-
-        .contact-link {
-            display: block;
+        .contact-card p {
             color: var(--text-secondary);
-            text-decoration: none;
-            margin-bottom: 8px;
-            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            line-height: 1.6;
             font-size: 1.1rem;
         }
 
-        .contact-link:hover {
-            color: var(--primary-color);
-            transform: translateX(5px);
-        }
-
-        .contact-label {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-top: 5px;
-        }
-
-        /* Contact Form - Right Side */
-        .contact-form-container {
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 25px;
-            padding: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            opacity: 0;
-            transform: translateX(50px);
-            animation: slideInRight 0.8s ease-out 0.5s forwards;
-        }
-
-        .contact-form-container h2 {
-            font-size: 2rem;
-            color: var(--text-primary);
-            margin-bottom: 30px;
-            font-weight: 600;
-            text-align: center;
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-            position: relative;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 15px 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            color: var(--text-primary);
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 0 20px var(--primary-glow);
-        }
-
-        .form-textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        .submit-btn {
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
             background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
             color: white;
-            border: none;
-            padding: 16px 40px;
+            text-decoration: none;
+            padding: 16px 35px;
             border-radius: 12px;
-            font-size: 1.1rem;
             font-weight: 600;
-            cursor: pointer;
+            font-size: 1.1rem;
             transition: all 0.3s ease;
-            width: 100%;
             position: relative;
             overflow: hidden;
         }
 
-        .submit-btn::before {
+        .contact-btn::before {
             content: '';
             position: absolute;
             top: 0;
@@ -494,109 +415,76 @@
             transition: left 0.5s ease;
         }
 
-        .submit-btn:hover::before {
+        .contact-btn:hover::before {
             left: 100%;
         }
 
-        .submit-btn:hover {
+        .contact-btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 15px 30px var(--primary-glow);
         }
 
-        .submit-btn:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-            transform: none;
+        .contact-btn-secondary {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
         }
 
-        .submit-btn:disabled:hover {
-            transform: none;
-            box-shadow: none;
+        .contact-btn-secondary:hover {
+            background: var(--primary-color);
+            color: white;
         }
 
-        .loading-spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s ease-in-out infinite;
-            margin-right: 10px;
+        /* Quick Actions */
+        .quick-actions {
+            text-align: center;
+            margin-top: 60px;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .quick-actions h2 {
+            font-size: 2.5rem;
+            color: var(--text-primary);
+            margin-bottom: 40px;
+            font-weight: 600;
         }
 
-        /* Social Links */
-        .social-links {
+        .action-buttons {
             display: flex;
             justify-content: center;
             gap: 25px;
-            margin-top: 50px;
+            flex-wrap: wrap;
         }
 
-        .social-link {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.05);
+        .action-btn {
             display: flex;
             align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
             text-decoration: none;
+            padding: 18px 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
-            font-size: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            position: relative;
-            overflow: hidden;
+            font-weight: 500;
         }
 
-        .social-link::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, var(--primary-glow), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .social-link:hover::before {
-            left: 100%;
-        }
-
-        .social-link:hover {
+        .action-btn:hover {
             background: var(--primary-color);
-            color: #fff;
-            transform: translateY(-5px) scale(1.1);
+            transform: translateY(-3px);
             border-color: var(--primary-color);
             box-shadow: 0 10px 25px var(--primary-glow);
         }
 
         /* Animations */
-        @keyframes slideInLeft {
+        @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateX(-50px);
+                transform: translateY(50px);
             }
             to {
                 opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
+                transform: translateY(0);
             }
         }
 
@@ -636,13 +524,24 @@
                 font-size: 2.5rem;
             }
 
-            .contact-content {
+            .contact-grid {
                 grid-template-columns: 1fr;
-                gap: 40px;
+                gap: 30px;
             }
 
-            .contact-form-container {
-                padding: 30px;
+            .contact-card {
+                padding: 40px 25px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .action-btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
             }
 
             .theme-switcher {
@@ -669,35 +568,6 @@
             background: var(--primary-color);
             color: #fff;
         }
-        
-        :root {
-            --primary-color: #ff6b00;
-            --primary-light: #ff7a1a;
-            --primary-glow: rgba(255, 107, 0, 0.3);
-            --bg-dark: #0a0a0a;
-            --card-bg: rgba(20, 20, 20, 0.85);
-            --text-primary: #fff;
-            --text-secondary: #b8b8b8;
-            --text-muted: #8a8a8a;
-            --text-dim: #6b6b6b;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--bg-dark);
-            color: var(--text-primary);
-            overflow-x: hidden;
-            position: relative;
-            transition: background 0.3s ease;
-        }
-
-        /* ... (all your existing CSS remains exactly the same) ... */
     </style>
 </head>
 <body>
@@ -725,8 +595,8 @@
         <div class="card-container">
             <header>
                 <div class="logo">
-                    <img src="logo.png" alt="K C SAI NITHIN Logo" class="logo-img" onerror="this.style.display='none'; document.getElementById('logo-text').style.display='block';">
-                    <div class="logo-text" id="logo-text">K C SAI NITHIN</div>
+                    <!-- Logo image - replace with your actual logo file -->
+                    <img src="logo.png" class="logo-img">
                 </div>
                 <nav>
                     <ul>
@@ -741,115 +611,88 @@
             </header>
 
             <div class="contact-content">
-                <!-- Contact Information -->
-                <div class="contact-info">
+                <div class="contact-header">
+                    <h1>Let's <span class="highlight">Connect</span></h1>
+                    <p>Choose your preferred way to get in touch with me. I'm always excited to discuss new opportunities and collaborations!</p>
+                </div>
+
+                <div class="contact-grid">
+                    <!-- WhatsApp -->
+                    <div class="contact-card">
+                        <div class="contact-icon floating">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <h3>WhatsApp</h3>
+                        <p>Fastest way to reach me. Perfect for quick questions, project discussions, or instant messaging.</p>
+                        <a href="https://wa.me/919353735838" class="contact-btn" target="_blank">
+                            <i class="fab fa-whatsapp"></i>
+                            Message on WhatsApp
+                        </a>
+                    </div>
+
+                    <!-- Phone Call -->
                     <div class="contact-card">
                         <div class="contact-icon floating">
                             <i class="fas fa-phone"></i>
                         </div>
-                        <h3>Phone & WhatsApp</h3>
-                        <div class="contact-details">
-                            <a href="tel:+919353735838" class="contact-link">+91 9353735838</a>
-                            <a href="https://wa.me/919353735838" class="contact-link">WhatsApp: 9353735838</a>
-                            <div class="contact-label">Available 24/7</div>
-                        </div>
+                        <h3>Phone Call</h3>
+                        <p>Prefer voice calls? Feel free to call me directly for detailed discussions or urgent matters.</p>
+                        <a href="tel:+919353735838" class="contact-btn contact-btn-secondary">
+                            <i class="fas fa-phone"></i>
+                            Call +91 9353735838
+                        </a>
                     </div>
 
+                    <!-- Email -->
                     <div class="contact-card">
                         <div class="contact-icon floating">
                             <i class="fas fa-envelope"></i>
                         </div>
                         <h3>Email</h3>
-                        <div class="contact-details">
-                            <a href="mailto:sainithin.cs23@bmsce.ac.in" class="contact-link">sainithin.cs23@bmsce.ac.in</a>
-                            <a href="mailto:kcsainithin18@gmail.com" class="contact-link">kcsainithin18@gmail.com</a>
-                            <div class="contact-label">Academic & Personal</div>
-                        </div>
+                        <p>Perfect for formal inquiries, detailed project proposals, or when you need to share documents.</p>
+                        <a href="mailto:kcsainithin18@gmail.com" class="contact-btn">
+                            <i class="fas fa-envelope"></i>
+                            Send Email
+                        </a>
                     </div>
 
+                    <!-- LinkedIn -->
                     <div class="contact-card">
                         <div class="contact-icon floating">
-                            <i class="fas fa-globe"></i>
+                            <i class="fab fa-linkedin"></i>
                         </div>
-                        <h3>Professional</h3>
-                        <div class="contact-details">
-                            <a href="https://www.linkedin.com/in/sai-nithin-2441b6378/" class="contact-link" target="_blank">LinkedIn Profile</a>
-                            <div class="contact-label">Let's connect professionally</div>
-                        </div>
-                    </div>
-
-                    <div class="contact-card">
-                        <div class="contact-icon floating">
-                            <i class="fas fa-rocket"></i>
-                        </div>
-                        <h3>Quick Connect</h3>
-                        <div class="contact-details">
-                            <div class="contact-link">Response Time: < 24 hours</div>
-                            <div class="contact-link">Preferred: WhatsApp/Email</div>
-                            <div class="contact-label">Always excited to collaborate!</div>
-                        </div>
+                        <h3>LinkedIn</h3>
+                        <p>Connect professionally, view my work experience, and explore career opportunities together.</p>
+                        <a href="https://www.linkedin.com/in/sai-nithin-2441b6378/" class="contact-btn contact-btn-secondary" target="_blank">
+                            <i class="fab fa-linkedin"></i>
+                            Connect on LinkedIn
+                        </a>
                     </div>
                 </div>
 
-                <!-- Contact Form -->
-                <div class="contact-form-container">
-                    <h2>Send Me a <span class="highlight">Message</span></h2>
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <input type="text" class="form-input" id="name" placeholder="Your Name" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" class="form-input" id="email" placeholder="Your Email" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-input" id="subject" placeholder="Subject" required>
-                        </div>
-                        <div class="form-group">
-                            <textarea class="form-input form-textarea" id="message" placeholder="Your Message" required></textarea>
-                        </div>
-                        <button type="submit" class="submit-btn" id="submitBtn">
-                            <i class="fas fa-paper-plane"></i> Send Message
-                        </button>
-                    </form>
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <h2>Quick <span class="highlight">Actions</span></h2>
+                    <div class="action-buttons">
+                        <a href="https://wa.me/919353735838?text=Hi%20Nithin!%20I%20came%20across%20your%20portfolio%20and%20would%20like%20to%20connect." class="action-btn" target="_blank">
+                            <i class="fab fa-whatsapp"></i>
+                            Quick WhatsApp
+                        </a>
+                        <a href="mailto:kcsainithin18@gmail.com?subject=Portfolio%20Inquiry&body=Hi%20Nithin,%20I%20would%20like%20to%20discuss..." class="action-btn">
+                            <i class="fas fa-envelope"></i>
+                            Quick Email
+                        </a>
+                        <a href="tel:+919353735838" class="action-btn">
+                            <i class="fas fa-phone"></i>
+                            Instant Call
+                        </a>
+                    </div>
                 </div>
-            </div>
-
-            <!-- Social Links -->
-            <div class="social-links">
-                <a href="https://wa.me/919353735838" class="social-link" target="_blank">
-                    <i class="fab fa-whatsapp"></i>
-                </a>
-                <a href="mailto:kcsainithin18@gmail.com" class="social-link">
-                    <i class="fas fa-envelope"></i>
-                </a>
-                <a href="https://www.linkedin.com/in/sai-nithin-2441b6378/" class="social-link" target="_blank">
-                    <i class="fab fa-linkedin-in"></i>
-                </a>
-                <a href="tel:+919353735838" class="social-link">
-                    <i class="fas fa-phone"></i>
-                </a>
             </div>
         </div>
     </div>
 
     <script>
-        // Initialize Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyAol3gAFU0oFKBD_B2LZzet80YRhyu-JBg",
-            authDomain: "portfolio-nithin-f9a8e.firebaseapp.com",
-            databaseURL: "https://portfolio-nithin-f9a8e-default-rtdb.firebaseio.com",
-            projectId: "portfolio-nithin-f9a8e",
-            storageBucket: "portfolio-nithin-f9a8e.firebasestorage.app",
-            messagingSenderId: "1006574254937",
-            appId: "1:1006574254937:web:cde674412329f7d25caa48",
-            measurementId: "G-E0CTM79W13"
-        };
-
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-        const analytics = firebase.analytics();
-
         // Theme Switching
         const themes = {
             orange: { primary: '#ff6b00', light: '#ff7a1a', glow: 'rgba(255, 107, 0, 0.3)' },
@@ -899,10 +742,6 @@
             const savedTheme = localStorage.getItem('selectedTheme') || 'orange';
             changeTheme(savedTheme);
             createParticles();
-            
-            // Log Firebase initialization
-            console.log('🔥 Firebase initialized successfully!');
-            console.log('📊 Database URL:', firebaseConfig.databaseURL);
         });
 
         // Create floating particles
@@ -930,82 +769,9 @@
             }
         }
 
-        // Handle form submission with Firebase
-        document.getElementById('contactForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const submitBtn = document.getElementById('submitBtn');
-            const originalText = submitBtn.innerHTML;
-            
-            // Show loading state
-            submitBtn.innerHTML = '<span class="loading-spinner"></span>Sending...';
-            submitBtn.disabled = true;
-            
-            try {
-                // Get form data
-                const formData = {
-                    name: document.getElementById('name').value.trim(),
-                    email: document.getElementById('email').value.trim(),
-                    subject: document.getElementById('subject').value.trim(),
-                    message: document.getElementById('message').value.trim(),
-                    timestamp: new Date().toISOString(),
-                    ip: await getClientIP(),
-                    status: 'new'
-                };
-
-                // Validate form data
-                if (!formData.name || !formData.email || !formData.subject || !formData.message) {
-                    throw new Error('Please fill in all fields');
-                }
-
-                console.log('📨 Saving to Firebase:', formData);
-                
-                // Generate a unique ID for the message
-                const messageId = 'msg_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-                
-                // Save to Firebase Realtime Database at root level
-                const messageRef = database.ref('messages/' + messageId);
-                
-                await messageRef.set(formData);
-                
-                console.log('✅ Message saved successfully!');
-                console.log('📊 View your messages at: https://console.firebase.google.com/u/0/project/portfolio-nithin-f9a8e/database/portfolio-nithin-f9a8e-default-rtdb/data/~2F');
-                
-                // Show success message
-                showNotification('🚀 Message Sent!', 'Your message has been saved to my database! I\'ll get back to you soon.', 'success');
-                
-                // Reset form
-                this.reset();
-                
-            } catch (error) {
-                console.error('❌ Error saving message:', error);
-                const errorMessage = error.message.includes('fill in all fields') 
-                    ? 'Please fill in all required fields.' 
-                    : 'Failed to send message. Please try again or contact me directly.';
-                showNotification('❌ Error', errorMessage, 'error');
-            } finally {
-                // Restore button state
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-            }
-        });
-
-        // Get client IP (approximate)
-        async function getClientIP() {
-            try {
-                const response = await fetch('https://api.ipify.org?format=json');
-                const data = await response.json();
-                return data.ip;
-            } catch (error) {
-                return 'unknown';
-            }
-        }
-
-        // Show notification
-        function showNotification(title, message, type = 'success') {
+        // Handle Hire button
+        function handleHire() {
             const notification = document.createElement('div');
-            const bgColor = type === 'success' ? 'var(--primary-color)' : '#dc2626';
-            
             notification.style.cssText = `
                 position: fixed;
                 top: 50%;
@@ -1014,7 +780,7 @@
                 background: var(--card-bg);
                 padding: 40px 50px;
                 border-radius: 20px;
-                border: 2px solid ${bgColor};
+                border: 2px solid var(--primary-color);
                 box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
                 z-index: 10000;
                 animation: fadeInUp 0.5s ease-out;
@@ -1025,10 +791,21 @@
             `;
             
             notification.innerHTML = `
-                <h2 style="color: ${bgColor}; font-size: 28px; margin-bottom: 20px;">${title}</h2>
-                <p style="color: var(--text-secondary); font-size: 16px; margin-bottom: 15px;">${message}</p>
+                <h2 style="color: var(--primary-color); font-size: 28px; margin-bottom: 20px;">🚀 Let's Work Together!</h2>
+                <p style="color: var(--text-secondary); font-size: 16px; margin-bottom: 15px;">Choose your preferred way to connect:</p>
+                <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 25px;">
+                    <a href="https://wa.me/919353735838" style="background: #25D366; color: white; padding: 12px 20px; border-radius: 8px; text-decoration: none; font-weight: 600;" target="_blank">
+                        💬 WhatsApp
+                    </a>
+                    <a href="mailto:kcsainithin18@gmail.com" style="background: var(--primary-color); color: white; padding: 12px 20px; border-radius: 8px; text-decoration: none; font-weight: 600;">
+                        📧 Email
+                    </a>
+                    <a href="tel:+919353735838" style="background: #10b981; color: white; padding: 12px 20px; border-radius: 8px; text-decoration: none; font-weight: 600;">
+                        📞 Call Now
+                    </a>
+                </div>
                 <button onclick="this.parentElement.remove()" style="
-                    background: ${bgColor};
+                    background: var(--primary-color);
                     color: white;
                     border: none;
                     padding: 12px 30px;
@@ -1050,16 +827,7 @@
                         }
                     }, 500);
                 }
-            }, 4000);
-        }
-
-        // Handle Hire button
-        function handleHire() {
-            showNotification(
-                '🚀 Let\'s Work Together!', 
-                'Thank you for your interest! Feel free to contact me directly via WhatsApp or Email for faster response.',
-                'success'
-            );
+            }, 5000);
         }
 
         // Smooth scroll for navigation links
