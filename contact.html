@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - K C SAI NITHIN</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+        import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAol3gAFU0oFKBD_B2LZzet80YRhyu-JBg",
+            authDomain: "portfolio-nithin-f9a8e.firebaseapp.com",
+            databaseURL: "https://portfolio-nithin-f9a8e-default-rtdb.firebaseio.com",
+            projectId: "portfolio-nithin-f9a8e",
+            storageBucket: "portfolio-nithin-f9a8e.firebasestorage.app",
+            messagingSenderId: "1006574254937",
+            appId: "1:1006574254937:web:cde674412329f7d25caa48",
+            measurementId: "G-E0CTM79W13"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const analytics = getAnalytics(app);
+
+        // Make Firebase available globally
+        window.firebaseApp = app;
+        window.firebaseDatabase = database;
+    </script>
+
+    <style>
+        :root {
+            --primary-color: #ff6b00;
+            --primary-light: #ff7a1a;
+            --primary-glow: rgba(255, 107, 0, 0.3);
+            --bg-dark: #0a0a0a;
+            --card-bg: rgba(20, 20, 20, 0.85);
+            --text-primary: #fff;
+            --text-secondary: #b8b8b8;
+            --text-muted: #8a8a8a;
+            --text-dim: #6b6b6b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            position: relative;
+            transition: background 0.3s ease;
+        }
+
+        /* Theme Switcher */
+        .theme-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--card-bg);
+            border-radius: 50px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            animation: slideInRight 0.5s ease-out;
+            transition: width 0.3s ease, padding 0.3s ease;
+            width: 60px;
+            overflow: hidden;
+        }
+
+        .theme-switcher.expanded {
+            width: 320px;
+            padding: 12px 20px;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .theme-switcher-icon {
+            font-size: 20px;
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-switcher.expanded .theme-switcher-icon {
+            transform: rotate(45deg);
+        }
+
+        .theme-colors {
+            display: flex;
+            gap: 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            flex-wrap: wrap;
+        }
+
+        .theme-switcher.expanded .theme-colors {
+            opacity: 1;
+        }
+
+        .theme-color {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .theme-color:hover {
+            transform: scale(1.15);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .theme-color.active {
+            border-color: var(--text-primary);
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        /* Royal color themes */
+        .theme-orange { background: linear-gradient(135deg, #ff6b00, #ff8533); }
+        .theme-blue { background: linear-gradient(135deg, #1e3a8a, #3b82f6); }
+        .theme-purple { background: linear-gradient(135deg, #581c87, #a855f7); }
+        .theme-green { background: linear-gradient(135deg, #166534, #22c55e); }
+        .theme-red { background: linear-gradient(135deg, #991b1b, #dc2626); }
+        .theme-pink { background: linear-gradient(135deg, #831843, #ec4899); }
+        .theme-gold { background: linear-gradient(135deg, #a16207, #eab308); }
+        .theme-emerald { background: linear-gradient(135deg, #047857, #10b981); }
+        .theme-sapphire { background: linear-gradient(135deg, #1e40af, #60a5fa); }
+        .theme-ruby { background: linear-gradient(135deg, #9f1239, #f87171); }
+
+        /* Background with floating particles */
+        .particles-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--primary-color);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: floatParticle 20s infinite linear;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            max-width: 1450px;
+            margin: 0 auto;
+            padding: 30px 50px;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Main card container */
+        .card-container {
+            background: var(--card-bg);
+            border-radius: 35px;
+            padding: 50px 60px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(60, 60, 60, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+            transition: background 0.3s ease;
+        }
+
+        .card-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-glow) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--primary-color);
+            letter-spacing: 3px;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            height: 50px;
+        }
+
+        .logo-img {
+            height: 100%;
+            width: auto;
+            max-width: 200px;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            display: none;
+        }
+
+        nav {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 50px;
+        }
+
+        nav a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a.active {
+            color: var(--primary-color);
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+        }
+
+        .hire-btn-header {
+            background: var(--primary-color);
+            color: #fff;
+            padding: 14px 32px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .hire-btn-header:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        /* Contact Header */
+        .contact-header {
+            text-align: center;
+            margin-bottom: 80px;
+            position: relative;
+        }
+
+        .contact-header h1 {
+            font-size: 4rem;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+        }
+
+        .contact-header h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .contact-header p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .highlight {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* Contact Content */
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        /* Contact Info - Left Side */
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .contact-card {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 25px;
+            padding: 35px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transform: translateX(-50px);
+            animation: slideInLeft 0.8s ease-out forwards;
+        }
+
+        .contact-card:nth-child(1) { animation-delay: 0.2s; }
+        .contact-card:nth-child(2) { animation-delay: 0.4s; }
+        .contact-card:nth-child(3) { animation-delay: 0.6s; }
+        .contact-card:nth-child(4) { animation-delay: 0.8s; }
+
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--primary-glow), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .contact-card:hover::before {
+            left: 100%;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--primary-color);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+        }
+
+        .contact-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .contact-card:hover .contact-icon {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .contact-card h3 {
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .contact-details {
+            text-align: center;
+        }
+
+        .contact-link {
+            display: block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .contact-link:hover {
+            color: var(--primary-color);
+            transform: translateX(5px);
+        }
+
+        .contact-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        /* Contact Form - Right Side */
+        .contact-form-container {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 25px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transform: translateX(50px);
+            animation: slideInRight 0.8s ease-out 0.5s forwards;
+        }
+
+        .contact-form-container h2 {
+            font-size: 2rem;
+            color: var(--text-primary);
+            margin-bottom: 30px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 20px var(--primary-glow);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px var(--primary-glow);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .submit-btn:disabled:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Social Links */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 50px;
+        }
+
+        .social-link {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--primary-glow), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .social-link:hover::before {
+            left: 100%;
+        }
+
+        .social-link:hover {
+            background: var(--primary-color);
+            color: #fff;
+            transform: translateY(-5px) scale(1.1);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 25px var(--primary-glow);
+        }
+
+        /* Animations */
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .card-container {
+                padding: 30px 25px;
+                border-radius: 25px;
+            }
+
+            header {
+                flex-direction: column;
+                gap: 25px;
+                margin-bottom: 40px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+            }
+
+            .contact-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .contact-form-container {
+                padding: 30px;
+            }
+
+            .theme-switcher {
+                top: 10px;
+                right: 10px;
+                left: 10px;
+                padding: 10px;
+                justify-content: center;
+            }
+
+            .theme-switcher.expanded {
+                width: auto;
+                max-width: 100%;
+            }
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Selection color */
+        ::selection {
+            background: var(--primary-color);
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Switcher -->
+    <div class="theme-switcher" id="themeSwitcher">
+        <i class="fas fa-paint-brush theme-switcher-icon" id="themeToggle"></i>
+        <div class="theme-colors">
+            <div class="theme-color theme-orange active" data-theme="orange" title="Royal Orange"></div>
+            <div class="theme-color theme-blue" data-theme="blue" title="Royal Blue"></div>
+            <div class="theme-color theme-purple" data-theme="purple" title="Royal Purple"></div>
+            <div class="theme-color theme-green" data-theme="green" title="Royal Green"></div>
+            <div class="theme-color theme-red" data-theme="red" title="Royal Red"></div>
+            <div class="theme-color theme-pink" data-theme="pink" title="Royal Pink"></div>
+            <div class="theme-color theme-gold" data-theme="gold" title="Royal Gold"></div>
+            <div class="theme-color theme-emerald" data-theme="emerald" title="Royal Emerald"></div>
+            <div class="theme-color theme-sapphire" data-theme="sapphire" title="Royal Sapphire"></div>
+            <div class="theme-color theme-ruby" data-theme="ruby" title="Royal Ruby"></div>
+        </div>
+    </div>
+
+    <!-- Animated Background -->
+    <div class="particles-background" id="particlesBackground"></div>
+
+    <div class="container">
+        <div class="card-container">
+            <header>
+                <div class="logo">
+                    <img src="logo.png" alt="K C SAI NITHIN Logo" class="logo-img" onerror="this.style.display='none'; document.getElementById('logo-text').style.display='block';">
+                    <div class="logo-text" id="logo-text">K C SAI NITHIN</div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="projects.html">Projects</a></li>
+                        <li><a href="skills.html">Skills</a></li>
+                        <li><a href="education.html">Education</a></li>
+                        <li><a href="contact.html" class="active">Contact</a></li>
+                    </ul>
+                </nav>
+                <button class="hire-btn-header" onclick="handleHire()">Hire Me</button>
+            </header>
+
+            <div class="contact-content">
+                <!-- Contact Information -->
+                <div class="contact-info">
+                    <div class="contact-card">
+                        <div class="contact-icon floating">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <h3>Phone & WhatsApp</h3>
+                        <div class="contact-details">
+                            <a href="tel:+919353735838" class="contact-link">+91 9353735838</a>
+                            <a href="https://wa.me/919353735838" class="contact-link">WhatsApp: 9353735838</a>
+                            <div class="contact-label">Available 24/7</div>
+                        </div>
+                    </div>
+
+                    <div class="contact-card">
+                        <div class="contact-icon floating">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h3>Email</h3>
+                        <div class="contact-details">
+                            <a href="mailto:sainithin.cs23@bmsce.ac.in" class="contact-link">sainithin.cs23@bmsce.ac.in</a>
+                            <a href="mailto:kcsainithin18@gmail.com" class="contact-link">kcsainithin18@gmail.com</a>
+                            <div class="contact-label">Academic & Personal</div>
+                        </div>
+                    </div>
+
+                    <div class="contact-card">
+                        <div class="contact-icon floating">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3>Professional</h3>
+                        <div class="contact-details">
+                            <a href="https://www.linkedin.com/in/sai-nithin-2441b6378/" class="contact-link" target="_blank">LinkedIn Profile</a>
+                            <div class="contact-label">Let's connect professionally</div>
+                        </div>
+                    </div>
+
+                    <div class="contact-card">
+                        <div class="contact-icon floating">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3>Quick Connect</h3>
+                        <div class="contact-details">
+                            <div class="contact-link">Response Time: < 24 hours</div>
+                            <div class="contact-link">Preferred: WhatsApp/Email</div>
+                            <div class="contact-label">Always excited to collaborate!</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="contact-form-container">
+                    <h2>Send Me a <span class="highlight">Message</span></h2>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <input type="text" class="form-input" id="name" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-input" id="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-input" id="subject" placeholder="Subject" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-input form-textarea" id="message" placeholder="Your Message" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn" id="submitBtn">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Social Links -->
+            <div class="social-links">
+                <a href="https://wa.me/919353735838" class="social-link" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="mailto:kcsainithin18@gmail.com" class="social-link">
+                    <i class="fas fa-envelope"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/sai-nithin-2441b6378/" class="social-link" target="_blank">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="tel:+919353735838" class="social-link">
+                    <i class="fas fa-phone"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Theme Switching
+        const themes = {
+            orange: { primary: '#ff6b00', light: '#ff7a1a', glow: 'rgba(255, 107, 0, 0.3)' },
+            blue: { primary: '#1e3a8a', light: '#3b82f6', glow: 'rgba(30, 58, 138, 0.3)' },
+            purple: { primary: '#581c87', light: '#a855f7', glow: 'rgba(88, 28, 135, 0.3)' },
+            green: { primary: '#166534', light: '#22c55e', glow: 'rgba(22, 101, 52, 0.3)' },
+            red: { primary: '#991b1b', light: '#dc2626', glow: 'rgba(153, 27, 27, 0.3)' },
+            pink: { primary: '#831843', light: '#ec4899', glow: 'rgba(131, 24, 67, 0.3)' },
+            gold: { primary: '#a16207', light: '#eab308', glow: 'rgba(161, 98, 7, 0.3)' },
+            emerald: { primary: '#047857', light: '#10b981', glow: 'rgba(4, 120, 87, 0.3)' },
+            sapphire: { primary: '#1e40af', light: '#60a5fa', glow: 'rgba(30, 64, 175, 0.3)' },
+            ruby: { primary: '#9f1239', light: '#f87171', glow: 'rgba(159, 18, 57, 0.3)' }
+        };
+
+        function changeTheme(themeName) {
+            const theme = themes[themeName];
+            const root = document.documentElement;
+            
+            root.style.setProperty('--primary-color', theme.primary);
+            root.style.setProperty('--primary-light', theme.light);
+            root.style.setProperty('--primary-glow', theme.glow);
+            
+            document.querySelectorAll('.theme-color').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-theme="${themeName}"]`).classList.add('active');
+            
+            localStorage.setItem('selectedTheme', themeName);
+            document.getElementById('themeSwitcher').classList.remove('expanded');
+        }
+
+        // Toggle theme switcher
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            document.getElementById('themeSwitcher').classList.toggle('expanded');
+        });
+
+        // Initialize theme switcher
+        document.querySelectorAll('.theme-color').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const theme = this.getAttribute('data-theme');
+                changeTheme(theme);
+            });
+        });
+
+        // Load saved theme
+        window.addEventListener('load', () => {
+            const savedTheme = localStorage.getItem('selectedTheme') || 'orange';
+            changeTheme(savedTheme);
+            createParticles();
+        });
+
+        // Create floating particles
+        function createParticles() {
+            const container = document.getElementById('particlesBackground');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Random properties
+                const size = Math.random() * 6 + 2;
+                const left = Math.random() * 100;
+                const animationDuration = Math.random() * 20 + 10;
+                const animationDelay = Math.random() * 5;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${left}%`;
+                particle.style.animationDuration = `${animationDuration}s`;
+                particle.style.animationDelay = `${animationDelay}s`;
+                
+                container.appendChild(particle);
+            }
+        }
+
+        // Handle form submission with Firebase
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.innerHTML;
+            
+            // Show loading state
+            submitBtn.innerHTML = '<span class="loading-spinner"></span>Sending...';
+            submitBtn.disabled = true;
+            
+            try {
+                // Get form data
+                const formData = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    subject: document.getElementById('subject').value,
+                    message: document.getElementById('message').value,
+                    timestamp: new Date().toISOString(),
+                    ip: await getClientIP()
+                };
+                
+                // Wait for Firebase to be available
+                await waitForFirebase();
+                
+                // Save to Firebase Realtime Database
+                const database = window.firebaseDatabase;
+                const messagesRef = window.firebaseRef(database, 'contactMessages');
+                const newMessageRef = window.firebasePush(messagesRef);
+                
+                await window.firebaseSet(newMessageRef, formData);
+                
+                // Show success message
+                showNotification('🚀 Message Sent!', 'Your message has been saved and I\'ll get back to you soon!', 'success');
+                
+                // Reset form
+                this.reset();
+                
+            } catch (error) {
+                console.error('Error saving message:', error);
+                showNotification('❌ Error', 'Failed to send message. Please try again or contact me directly.', 'error');
+            } finally {
+                // Restore button state
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+
+        // Wait for Firebase to be available
+        function waitForFirebase() {
+            return new Promise((resolve) => {
+                const checkFirebase = () => {
+                    if (window.firebaseDatabase && window.firebaseRef && window.firebasePush && window.firebaseSet) {
+                        resolve();
+                    } else {
+                        setTimeout(checkFirebase, 100);
+                    }
+                };
+                checkFirebase();
+            });
+        }
+
+        // Get client IP (approximate)
+        async function getClientIP() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                return data.ip;
+            } catch (error) {
+                return 'unknown';
+            }
+        }
+
+        // Show notification
+        function showNotification(title, message, type = 'success') {
+            const notification = document.createElement('div');
+            const bgColor = type === 'success' ? 'var(--primary-color)' : '#dc2626';
+            
+            notification.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: var(--card-bg);
+                padding: 40px 50px;
+                border-radius: 20px;
+                border: 2px solid ${bgColor};
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+                z-index: 10000;
+                animation: fadeInUp 0.5s ease-out;
+                backdrop-filter: blur(20px);
+                text-align: center;
+                max-width: 400px;
+                width: 90%;
+            `;
+            
+            notification.innerHTML = `
+                <h2 style="color: ${bgColor}; font-size: 28px; margin-bottom: 20px;">${title}</h2>
+                <p style="color: var(--text-secondary); font-size: 16px; margin-bottom: 15px;">${message}</p>
+                <button onclick="this.parentElement.remove()" style="
+                    background: ${bgColor};
+                    color: white;
+                    border: none;
+                    padding: 12px 30px;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-size: 14px;
+                    font-weight: 600;
+                ">Close</button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'fadeOut 0.5s ease-out';
+                setTimeout(() => notification.remove(), 500);
+            }, 4000);
+        }
+
+        // Handle Hire button
+        function handleHire() {
+            showNotification(
+                '🚀 Let\'s Work Together!', 
+                'Thank you for your interest! Feel free to contact me directly via WhatsApp or Email for faster response.',
+                'success'
+            );
+        }
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.getAttribute('href').includes('#')) {
+                    e.preventDefault();
+                    document.querySelectorAll('nav a').forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

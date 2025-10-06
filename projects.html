@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - K C SAI NITHIN</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #ff6b00;
+            --primary-light: #ff7a1a;
+            --primary-glow: rgba(255, 107, 0, 0.3);
+            --bg-dark: #0a0a0a;
+            --card-bg: rgba(20, 20, 20, 0.85);
+            --text-primary: #fff;
+            --text-secondary: #b8b8b8;
+            --text-muted: #8a8a8a;
+            --text-dim: #6b6b6b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            position: relative;
+            transition: background 0.3s ease;
+        }
+
+        /* Theme Switcher */
+        .theme-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--card-bg);
+            border-radius: 50px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            animation: slideInRight 0.5s ease-out;
+            transition: width 0.3s ease, padding 0.3s ease;
+            width: 60px;
+            overflow: hidden;
+        }
+
+        .theme-switcher.expanded {
+            width: 320px;
+            padding: 12px 20px;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .theme-switcher-icon {
+            font-size: 20px;
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-switcher.expanded .theme-switcher-icon {
+            transform: rotate(45deg);
+        }
+
+        .theme-colors {
+            display: flex;
+            gap: 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            flex-wrap: wrap;
+        }
+
+        .theme-switcher.expanded .theme-colors {
+            opacity: 1;
+        }
+
+        .theme-color {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .theme-color:hover {
+            transform: scale(1.15);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .theme-color.active {
+            border-color: var(--text-primary);
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        /* Royal color themes */
+        .theme-orange { background: linear-gradient(135deg, #ff6b00, #ff8533); }
+        .theme-blue { background: linear-gradient(135deg, #1e3a8a, #3b82f6); }
+        .theme-purple { background: linear-gradient(135deg, #581c87, #a855f7); }
+        .theme-green { background: linear-gradient(135deg, #166534, #22c55e); }
+        .theme-red { background: linear-gradient(135deg, #991b1b, #dc2626); }
+        .theme-pink { background: linear-gradient(135deg, #831843, #ec4899); }
+        .theme-gold { background: linear-gradient(135deg, #a16207, #eab308); }
+        .theme-emerald { background: linear-gradient(135deg, #047857, #10b981); }
+        .theme-sapphire { background: linear-gradient(135deg, #1e40af, #60a5fa); }
+        .theme-ruby { background: linear-gradient(135deg, #9f1239, #f87171); }
+
+        /* Background */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .triangle {
+            position: absolute;
+            border-style: solid;
+            opacity: 0.08;
+            transition: opacity 0.3s ease;
+        }
+
+        .triangle1 {
+            top: -15%;
+            left: -10%;
+            width: 0;
+            height: 0;
+            border-left: 400px solid transparent;
+            border-right: 400px solid transparent;
+            border-bottom: 600px solid #1a1a1a;
+            transform: rotate(125deg);
+        }
+
+        .triangle2 {
+            top: 10%;
+            right: -15%;
+            width: 0;
+            height: 0;
+            border-left: 500px solid transparent;
+            border-right: 500px solid transparent;
+            border-bottom: 700px solid #1a1a1a;
+            transform: rotate(-45deg);
+        }
+
+        .triangle3 {
+            bottom: -20%;
+            left: -5%;
+            width: 0;
+            height: 0;
+            border-left: 450px solid transparent;
+            border-right: 450px solid transparent;
+            border-bottom: 650px solid #1a1a1a;
+            transform: rotate(210deg);
+        }
+
+        .triangle4 {
+            bottom: -10%;
+            right: -10%;
+            width: 0;
+            height: 0;
+            border-left: 350px solid transparent;
+            border-right: 350px solid transparent;
+            border-bottom: 550px solid #1a1a1a;
+            transform: rotate(35deg);
+        }
+
+        .container {
+            max-width: 1450px;
+            margin: 0 auto;
+            padding: 30px 50px;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Main card container */
+        .card-container {
+            background: var(--card-bg);
+            border-radius: 35px;
+            padding: 50px 60px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(60, 60, 60, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+            transition: background 0.3s ease;
+        }
+
+        .card-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-glow) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--primary-color);
+            letter-spacing: 3px;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            height: 50px;
+        }
+
+        .logo-img {
+            height: 100%;
+            width: auto;
+            max-width: 200px;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            display: none;
+        }
+
+        nav {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 50px;
+        }
+
+        nav a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a.active {
+            color: var(--primary-color);
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+        }
+
+        .hire-btn-header {
+            background: var(--primary-color);
+            color: #fff;
+            padding: 14px 32px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .hire-btn-header:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        /* Projects Section */
+        .projects-header {
+            text-align: center;
+            margin-bottom: 80px;
+            position: relative;
+        }
+
+        .projects-header h1 {
+            font-size: 4rem;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+        }
+
+        .projects-header h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .projects-header p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .highlight {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .project-card {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 25px;
+            padding: 35px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--primary-glow), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .project-card:hover::before {
+            left: 100%;
+        }
+
+        .project-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: var(--primary-color);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+        }
+
+        .project-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover .project-icon {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        .project-card h3 {
+            font-size: 1.8rem;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .project-card p {
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+            line-height: 1.7;
+            text-align: center;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+
+        .tech-tag {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            padding: 8px 18px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .tech-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--primary-glow);
+        }
+
+        .project-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .project-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 12px 25px;
+            border: 2px solid var(--primary-color);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-color);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .project-link:hover {
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px var(--primary-glow);
+        }
+
+        .project-link:hover::before {
+            left: 0;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .project-card {
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+        .project-card:nth-child(1) { animation-delay: 0.1s; }
+        .project-card:nth-child(2) { animation-delay: 0.2s; }
+        .project-card:nth-child(3) { animation-delay: 0.3s; }
+        .project-card:nth-child(4) { animation-delay: 0.4s; }
+        .project-card:nth-child(5) { animation-delay: 0.5s; }
+        .project-card:nth-child(6) { animation-delay: 0.6s; }
+        .project-card:nth-child(7) { animation-delay: 0.7s; }
+        .project-card:nth-child(8) { animation-delay: 0.8s; }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .card-container {
+                padding: 30px 25px;
+                border-radius: 25px;
+            }
+
+            header {
+                flex-direction: column;
+                gap: 25px;
+                margin-bottom: 40px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .projects-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .project-card {
+                padding: 25px;
+            }
+
+            .theme-switcher {
+                top: 10px;
+                right: 10px;
+                left: 10px;
+                padding: 10px;
+                justify-content: center;
+            }
+
+            .theme-switcher.expanded {
+                width: auto;
+                max-width: 100%;
+            }
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Selection color */
+        ::selection {
+            background: var(--primary-color);
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Switcher -->
+    <div class="theme-switcher" id="themeSwitcher">
+        <i class="fas fa-paint-brush theme-switcher-icon" id="themeToggle"></i>
+        <div class="theme-colors">
+            <div class="theme-color theme-orange active" data-theme="orange" title="Royal Orange"></div>
+            <div class="theme-color theme-blue" data-theme="blue" title="Royal Blue"></div>
+            <div class="theme-color theme-purple" data-theme="purple" title="Royal Purple"></div>
+            <div class="theme-color theme-green" data-theme="green" title="Royal Green"></div>
+            <div class="theme-color theme-red" data-theme="red" title="Royal Red"></div>
+            <div class="theme-color theme-pink" data-theme="pink" title="Royal Pink"></div>
+            <div class="theme-color theme-gold" data-theme="gold" title="Royal Gold"></div>
+            <div class="theme-color theme-emerald" data-theme="emerald" title="Royal Emerald"></div>
+            <div class="theme-color theme-sapphire" data-theme="sapphire" title="Royal Sapphire"></div>
+            <div class="theme-color theme-ruby" data-theme="ruby" title="Royal Ruby"></div>
+        </div>
+    </div>
+
+    <div class="background">
+        <div class="triangle triangle1"></div>
+        <div class="triangle triangle2"></div>
+        <div class="triangle triangle3"></div>
+        <div class="triangle triangle4"></div>
+    </div>
+    
+    <div class="container">
+        <div class="card-container">
+            <header>
+                <div class="logo">
+                    <img src="logo.png" alt="K C SAI NITHIN Logo" class="logo-img" onerror="this.style.display='none'; document.getElementById('logo-text').style.display='block';">
+                    <div class="logo-text" id="logo-text">K C SAI NITHIN</div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="projects.html" class="active">Projects</a></li>
+                        <li><a href="skills.html">Skills</a></li>
+                        <li><a href="education.html">Education</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+                <button class="hire-btn-header" onclick="handleHire()">Hire Me</button>
+            </header>
+
+            <div class="projects-content">
+                <div class="projects-header">
+                    <h1>My <span class="highlight">Projects</span></h1>
+                    <p>Here are some of the projects I've worked on, showcasing my skills in <span class="highlight">software development</span> and <span class="highlight">problem-solving</span>.</p>
+                </div>
+
+                <div class="projects-grid">
+                    <!-- Grocera App -->
+                    <div class="project-card">
+                        <div class="project-icon floating">
+                            <i class="fas fa-shopping-basket"></i>
+                        </div>
+                        <h3>Grocera App</h3>
+                        <p>Developed a comprehensive grocery management Android app with recipe suggestions and budget planning features.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Java</span>
+                            <span class="tech-tag">Firebase</span>
+                            <span class="tech-tag">Android</span>
+                            <span class="tech-tag">UI/UX</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://kcsainithin.github.io/grocera-mobile/" class="project-link" target="_blank">
+                                <i class="fas fa-external-link-alt"></i>
+                                Live Demo
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Nester AI -->
+                    <div class="project-card">
+                        <div class="project-icon floating">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3>Nester AI</h3>
+                        <p>An intelligent AI chatbot with natural language processing capabilities for enhanced user interactions.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">AI/ML</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">NLP</span>
+                            <span class="tech-tag">Web Development</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://kcsainithin.github.io/nester-ai/" class="project-link" target="_blank">
+                                <i class="fas fa-external-link-alt"></i>
+                                Live Demo
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- E-Bazzar -->
+                    <div class="project-card">
+                        <div class="project-icon floating">
+                            <i class="fas fa-store"></i>
+                        </div>
+                        <h3>E-Bazzar</h3>
+                        <p>Online marketplace for electronics with real-time data storage, product catalog, cart, and order management.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Firebase</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">E-commerce</span>
+                            <span class="tech-tag">Real-time DB</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link">
+                                <i class="fab fa-github"></i>
+                                Code
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Taskify -->
+                    <div class="project-card">
+                        <div class="project-icon floating">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <h3>Taskify</h3>
+                        <p>Bash-based to-do list manager with Zenity GUI and reminder functionality for efficient task management.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Bash</span>
+                            <span class="tech-tag">Zenity</span>
+                            <span class="tech-tag">Linux</span>
+                            <span class="tech-tag">Automation</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link">
+                                <i class="fab fa-github"></i>
+                                Code
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- CGPA Calculator -->
+                    <div class="project-card">
+                        <div class="project-icon floating">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <h3>CGPA Calculator</h3>
+                        <p>Python program to calculate CGPA based on input marks for multiple subjects with credit point handling.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Data Processing</span>
+                            <span class="tech-tag">Algorithms</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link">
+                                <i class="fab fa-github"></i>
+                                Code
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Weather App -->
+                    <div class="project-card">
+                        <div class="project-icon floating">
+                            <i class="fas fa-cloud-sun"></i>
+                        </div>
+                        <h3>Weather App</h3>
+                        <p>Responsive weather application providing real-time updates and forecasts with beautiful UI design.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">API</span>
+                            <span class="tech-tag">CSS3</span>
+                            <span class="tech-tag">HTML5</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link">
+                                <i class="fab fa-github"></i>
+                                Code
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Password Manager -->
+                    <div class="project-card">
+                        <div class="project-icon floating">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <h3>Password Manager</h3>
+                        <p>Secure password management application with encryption and cross-platform synchronization features.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Java</span>
+                            <span class="tech-tag">Encryption</span>
+                            <span class="tech-tag">SQLite</span>
+                            <span class="tech-tag">Security</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link">
+                                <i class="fab fa-github"></i>
+                                Code
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Portfolio Website -->
+                    <div class="project-card">
+                        <div class="project-icon floating">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h3>Portfolio Website</h3>
+                        <p>Responsive personal portfolio website showcasing projects and skills with modern design and animations.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">HTML5</span>
+                            <span class="tech-tag">CSS3</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">UI/UX</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link">
+                                <i class="fab fa-github"></i>
+                                Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Theme Switching
+        const themes = {
+            orange: { primary: '#ff6b00', light: '#ff7a1a', glow: 'rgba(255, 107, 0, 0.3)' },
+            blue: { primary: '#1e3a8a', light: '#3b82f6', glow: 'rgba(30, 58, 138, 0.3)' },
+            purple: { primary: '#581c87', light: '#a855f7', glow: 'rgba(88, 28, 135, 0.3)' },
+            green: { primary: '#166534', light: '#22c55e', glow: 'rgba(22, 101, 52, 0.3)' },
+            red: { primary: '#991b1b', light: '#dc2626', glow: 'rgba(153, 27, 27, 0.3)' },
+            pink: { primary: '#831843', light: '#ec4899', glow: 'rgba(131, 24, 67, 0.3)' },
+            gold: { primary: '#a16207', light: '#eab308', glow: 'rgba(161, 98, 7, 0.3)' },
+            emerald: { primary: '#047857', light: '#10b981', glow: 'rgba(4, 120, 87, 0.3)' },
+            sapphire: { primary: '#1e40af', light: '#60a5fa', glow: 'rgba(30, 64, 175, 0.3)' },
+            ruby: { primary: '#9f1239', light: '#f87171', glow: 'rgba(159, 18, 57, 0.3)' }
+        };
+
+        function changeTheme(themeName) {
+            const theme = themes[themeName];
+            const root = document.documentElement;
+            
+            root.style.setProperty('--primary-color', theme.primary);
+            root.style.setProperty('--primary-light', theme.light);
+            root.style.setProperty('--primary-glow', theme.glow);
+            
+            document.querySelectorAll('.theme-color').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-theme="${themeName}"]`).classList.add('active');
+            
+            localStorage.setItem('selectedTheme', themeName);
+            document.getElementById('themeSwitcher').classList.remove('expanded');
+        }
+
+        // Toggle theme switcher
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            document.getElementById('themeSwitcher').classList.toggle('expanded');
+        });
+
+        // Initialize theme switcher
+        document.querySelectorAll('.theme-color').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const theme = this.getAttribute('data-theme');
+                changeTheme(theme);
+            });
+        });
+
+        // Load saved theme
+        window.addEventListener('load', () => {
+            const savedTheme = localStorage.getItem('selectedTheme') || 'orange';
+            changeTheme(savedTheme);
+        });
+
+        // Handle Hire button
+        function handleHire() {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: var(--card-bg);
+                padding: 40px 50px;
+                border-radius: 20px;
+                border: 2px solid var(--primary-color);
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+                z-index: 10000;
+                animation: fadeInUp 0.5s ease-out;
+                backdrop-filter: blur(20px);
+                text-align: center;
+            `;
+            notification.innerHTML = `
+                <h2 style="color: var(--primary-color); font-size: 28px; margin-bottom: 20px;">🚀 Let's Work Together!</h2>
+                <p style="color: var(--text-secondary); font-size: 16px; margin-bottom: 15px;">Thank you for your interest!</p>
+                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 10px;">📧 kc.sainithin@email.com</p>
+                <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 25px;">📱 +1 (555) 123-4567</p>
+                <button onclick="this.parentElement.remove()" style="
+                    background: var(--primary-color);
+                    color: white;
+                    border: none;
+                    padding: 12px 30px;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-size: 14px;
+                    font-weight: 600;
+                ">Close</button>
+            `;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'fadeOut 0.5s ease-out';
+                setTimeout(() => notification.remove(), 500);
+            }, 5000);
+        }
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.getAttribute('href').includes('#')) {
+                    e.preventDefault();
+                    document.querySelectorAll('nav a').forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
